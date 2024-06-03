@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DDD2FEA8-801E-463B-8913-9CCCDA2D9429}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>ENCs_for_Mission_Planner</RootNamespace>
+    <AssemblyName>ENCs_for_Mission_Planner</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>$(SolutionDir)bin\Debug\net461\plugins\ENCs_for_Mission_Planner\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>$(SolutionDir)bin\Release\net461\plugins\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\anon8\Downloads\ENCs_for_Mission_Planner-master\ENCs_for_Mission_Planner-master\ExtLibs\BaseClasses\BaseClasses.csproj">
+      <Project>{2a8e8af5-74e7-49db-a42e-9360fa7a6cc4}</Project>
+      <Name>BaseClasses</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\anon8\Downloads\ENCs_for_Mission_Planner-master\ENCs_for_Mission_Planner-master\ExtLibs\BSE.Windows.Forms\BSE.Windows.Forms.csproj">
+      <Project>{9ca367b8-0b98-49d1-84fb-735e612e3ba9}</Project>
+      <Name>BSE.Windows.Forms</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\anon8\Downloads\ENCs_for_Mission_Planner-master\ENCs_for_Mission_Planner-master\ExtLibs\Core\Core.csproj">
+      <Project>{59129078-7b12-4198-b93e-0aa08d0bb7ed}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\anon8\Downloads\ENCs_for_Mission_Planner-master\ENCs_for_Mission_Planner-master\ExtLibs\Mavlink\MAVLink.csproj">
+      <Project>{13d2ec90-c41f-48a1-aada-859b6dc24edc}</Project>
+      <Name>MAVLink</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\anon8\Downloads\ENCs_for_Mission_Planner-master\ENCs_for_Mission_Planner-master\MissionPlanner.csproj">
+      <Project>{a2e22272-95fe-47b6-b050-9ae7e2055bf5}</Project>
+      <Name>MissionPlanner</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\anon8\Downloads\ENCs_for_Mission_Planner-master\ENCs_for_Mission_Planner-master\ExtLibs\ArduPilot\MissionPlanner.ArduPilot.csproj">
+      <Project>{ca6345d3-7a6d-478b-a0ed-a58e50dcaa83}</Project>
+      <Name>MissionPlanner.ArduPilot</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\anon8\Downloads\ENCs_for_Mission_Planner-master\ENCs_for_Mission_Planner-master\ExtLibs\Comms\MissionPlanner.Comms.csproj">
+      <Project>{825e7a10-390c-4a2b-b3a8-491d14966912}</Project>
+      <Name>MissionPlanner.Comms</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\anon8\Downloads\ENCs_for_Mission_Planner-master\ENCs_for_Mission_Planner-master\ExtLibs\Controls\MissionPlanner.Controls.csproj">
+      <Project>{c8b88795-6d01-494d-83ad-6944bd4c5023}</Project>
+      <Name>MissionPlanner.Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\anon8\Downloads\ENCs_for_Mission_Planner-master\ENCs_for_Mission_Planner-master\ExtLibs\GeoUtility\GeoUtility.csproj">
+      <Project>{7f7994ce-823f-4a04-bbea-d0a3808ff56d}</Project>
+      <Name>GeoUtility</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\anon8\Downloads\ENCs_for_Mission_Planner-master\ENCs_for_Mission_Planner-master\ExtLibs\GMap.NET.Core\GMap.NET.Core.csproj">
+      <Project>{d0c39d9d-bed0-418b-9a5e-713176caf40c}</Project>
+      <Name>GMap.NET.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\anon8\Downloads\ENCs_for_Mission_Planner-master\ENCs_for_Mission_Planner-master\ExtLibs\GMap.NET.WindowsForms\GMap.NET.WindowsForms.csproj">
+      <Project>{e06def77-f933-42fb-afd7-db2d0d8d6a98}</Project>
+      <Name>GMap.NET.WindowsForms</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\anon8\Downloads\ENCs_for_Mission_Planner-master\ENCs_for_Mission_Planner-master\ExtLibs\Utilities\MissionPlanner.Utilities.csproj">
+      <Project>{1378a66c-38e4-46f5-a05f-dc04ef7d4d16}</Project>
+      <Name>MissionPlanner.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\anon8\Downloads\ENCs_for_Mission_Planner-master\ENCs_for_Mission_Planner-master\ExtLibs\GMap.NET.Drawing\GMap.NET.Drawing.csproj">
+      <Project>{d773accd-9c2d-4e94-a967-faa7ea2d21cb}</Project>
+      <Name>GMap.NET.Drawing</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\anon8\Downloads\ENCs_for_Mission_Planner-master\ENCs_for_Mission_Planner-master\ExtLibs\Interfaces\Interfaces.csproj">
+      <Project>{FD4D2994-9BEA-41A1-8C51-2E02D1E8503E}</Project>
+      <Name>Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\anon8\Downloads\ENCs_for_Mission_Planner-master\ENCs_for_Mission_Planner-master\ExtLibs\Maps\MissionPlanner.Maps.csproj">
+      <Project>{6c4ff9c3-7aff-4274-b8fc-4a93a1faadea}</Project>
+      <Name>MissionPlanner.Maps</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\anon8\Downloads\ENCs_for_Mission_Planner-master\ENCs_for_Mission_Planner-master\ExtLibs\SvgNet\SvgNet.csproj">
+      <Project>{bb4c8021-b5e1-4de2-82cb-14bdfb9837e4}</Project>
+      <Name>SvgNet</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ENCs_for_Mission_Planner.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="BaseClasses">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Mission Planner\BaseClasses.dll</HintPath>
+    </Reference>
+    <Reference Include="BSE.Windows.Forms">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Mission Planner\BSE.Windows.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="Core">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Mission Planner\Core.dll</HintPath>
+    </Reference>
+    <Reference Include="GeoJSON.Net, Version=1.2.16.0, Culture=neutral, PublicKeyToken=42c00ea87f5f14d4, processorArchitecture=MSIL">
+      <HintPath>packages\GeoJSON.Net.1.2.19\lib\net45\GeoJSON.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="GeoUtility">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Mission Planner\GeoUtility.dll</HintPath>
+    </Reference>
+    <Reference Include="GMap.NET.Core">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Mission Planner\GMap.NET.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="GMap.NET.Drawing">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Mission Planner\GMap.NET.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="GMap.NET.WindowsForms">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Mission Planner\GMap.NET.WindowsForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Interfaces">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Mission Planner\Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="MAVLink">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Mission Planner\MAVLink.dll</HintPath>
+    </Reference>
+    <Reference Include="MissionPlanner">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Mission Planner\MissionPlanner.exe</HintPath>
+    </Reference>
+    <Reference Include="MissionPlanner.ArduPilot">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Mission Planner\MissionPlanner.ArduPilot.dll</HintPath>
+    </Reference>
+    <Reference Include="MissionPlanner.Controls">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Mission Planner\MissionPlanner.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="MissionPlanner.Maps">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Mission Planner\MissionPlanner.Maps.dll</HintPath>
+    </Reference>
+    <Reference Include="MissionPlanner.Utilities">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Mission Planner\MissionPlanner.Utilities.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SvgNet">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Mission Planner\SvgNet.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Common, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Drawing.Common.8.0.4\lib\net462\System.Drawing.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
