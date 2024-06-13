@@ -51,6 +51,7 @@ using static System.Net.WebRequestMethods;
 using MissionPlanner.ArduPilot;
 using static RFD.RFD900.TSetting;
 using MissionPlanner.Log;
+using OSGeo.OGR;
 
 namespace ENCs_for_Mission_Planner
 {
@@ -3327,6 +3328,16 @@ public class IconDetails
       
         public override bool Init()
         {
+            // Add a new menu item to the Mission Planner map context menu
+            ToolStripMenuItem readS57Item = new ToolStripMenuItem("Read S57 Layers");
+            readS57Item.Click += ReadS57ItemClick;
+
+            // Ensure that the menu item is added to the correct context menu
+            if (Host.FDMenuMap != null)
+            {
+                Host.FDMenuMap.Items.Add(readS57Item);
+            }
+
             loopratehz = 1;
 
             var zoom = Host.FDGMapControl.Zoom;
@@ -3430,6 +3441,155 @@ public class IconDetails
             Host.FDGMapControl.Overlays.Add(my_beautiful_overlays.LIGHTSoverlay);
             return true;
         }
+
+        //private void ReadS57ItemClick(object sender, EventArgs e)
+        //{
+        //    using (var fbd = new FolderBrowserDialog())
+        //    {
+        //        if (fbd.ShowDialog() == DialogResult.OK)
+        //        {
+        //            // Ensure GDAL is configured before attempting to read files
+        //            GdalConfiguration.ConfigureOgr();
+
+        //            // List each .000 file in the selected folder
+        //            foreach (string file in Directory.GetFiles(fbd.SelectedPath, "*.000"))
+        //            {
+        //                Console.WriteLine("Processing file: " + file);
+        //                List<string> layers = ListLayerInfo(file);
+        //                Console.WriteLine("Layers: " + String.Join(", ", layers));
+        //            }
+        //        }
+        //    }
+        //}
+        private void ReadS57ItemClick(object sender, EventArgs e)
+        {
+            using (var fbd = new FolderBrowserDialog())
+            {
+                if (fbd.ShowDialog() == DialogResult.OK)
+                {
+                    GdalConfiguration.ConfigureOgr();
+
+                    foreach (string file in Directory.GetFiles(fbd.SelectedPath, "*.000"))
+                    {
+                        Console.WriteLine("Processing file: " + file);
+                        List<string> layers = ListLayerInfo(file);
+                        foreach (string layerName in layers)
+                        {
+                            if (GenerateGeoJSONFeatureCollection(layerName, file))
+                            {
+                                Console.WriteLine($"Generated GeoJSON for layer: {layerName}");
+                            }
+                            else
+                            {
+                                Console.WriteLine($"Failed to generate GeoJSON for layer: {layerName}");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+private bool GenerateGeoJSONFeatureCollection(string featureType, string fileName)
+    {
+        try
+        {
+            Console.WriteLine("We are opening a file");
+            string encFileName = fileName;
+            string endBit = "_" + featureType.ToUpper() + ".js";  // Added an underscore before the feature type
+            string filenameWithJsOnEnd = fileName.Replace(".000", endBit);
+            string outName = filenameWithJsOnEnd;
+            Console.WriteLine("Making GeoJSON: " + outName);
+
+            // Open the original data source
+            DataSource ds = Ogr.Open(encFileName, 0);
+            Layer layer = ds.GetLayerByName(featureType);
+            if (layer == null)
+            {
+                Console.WriteLine("Layer not found: " + featureType);
+                return false;
+            }
+
+            // Create the GeoJSON output
+            Driver drv = Ogr.GetDriverByName("GeoJSON");
+            if (drv == null)
+            {
+                Console.WriteLine("GeoJSON driver not available.");
+                return false;
+            }
+
+            DataSource outDs = drv.CreateDataSource(outName, null);
+            if (outDs == null)
+            {
+                Console.WriteLine("Could not create GeoJSON output.");
+                return false;
+            }
+
+            Layer outLayer = outDs.CopyLayer(layer, featureType, null);
+            if (outLayer == null)
+            {
+                Console.WriteLine("Could not copy layer to GeoJSON.");
+                return false;
+            }
+
+            outDs.FlushCache();
+            Console.WriteLine("Success");
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error: " + ex.Message);
+            return false;
+        }
+    }
+
+
+    private List<string> ListLayerInfo(string filePath)
+        {
+            List<string> layerNames = new List<string>();
+
+            // Open the data source
+            DataSource dataSource = Ogr.Open(filePath, 0);
+            if (dataSource == null)
+            {
+                Console.WriteLine("Unable to open file: " + filePath);
+                return layerNames;
+            }
+
+            // Iterate through each layer and add layer names to the list
+            for (int i = 0; i < dataSource.GetLayerCount(); i++)
+            {
+                Layer layer = dataSource.GetLayerByIndex(i);
+                layerNames.Add(layer.GetName());
+            }
+
+            // Clean up
+            dataSource.Dispose();
+
+            return layerNames;
+        }
+
+
+
+        //private void ReadS57ItemClick(object sender, EventArgs e)
+        //{
+        //    using (var fbd = new FolderBrowserDialog())
+        //    {
+        //        if (fbd.ShowDialog() == DialogResult.OK)
+        //        {
+        //            foreach (string file in Directory.GetFiles(fbd.SelectedPath, "*.000"))
+        //            {
+        //                Console.WriteLine(file);
+        //            }
+        //        }
+        //    }
+        //    GdalConfiguration.ConfigureOgr();
+        //}
+
+        // Example assuming Mission Planner has an appropriate method/class to handle GDAL operations
+
+
 
         private void DisplayLightSectrPropertiesNearClick(PointLatLng clickLocation, int pixelThreshold, GMapControl mapControl)
         {

@@ -109,6 +109,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ENCs_for_Mission_Planner.cs" />
+    <Compile Include="GdalConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="BaseClasses">
@@ -119,6 +120,12 @@
     </Reference>
     <Reference Include="Core">
       <HintPath>..\..\..\..\..\Program Files (x86)\Mission Planner\Core.dll</HintPath>
+    </Reference>
+    <Reference Include="gdalconst_csharp, Version=1.0.6881.30515, Culture=neutral, PublicKeyToken=db5a52b08dc5b321, processorArchitecture=MSIL">
+      <HintPath>packages\GDAL.2.3.2\lib\net40\gdalconst_csharp.dll</HintPath>
+    </Reference>
+    <Reference Include="gdal_csharp, Version=1.0.6881.30515, Culture=neutral, PublicKeyToken=db5a52b08dc5b321, processorArchitecture=MSIL">
+      <HintPath>packages\GDAL.2.3.2\lib\net40\gdal_csharp.dll</HintPath>
     </Reference>
     <Reference Include="GeoJSON.Net, Version=1.2.16.0, Culture=neutral, PublicKeyToken=42c00ea87f5f14d4, processorArchitecture=MSIL">
       <HintPath>packages\GeoJSON.Net.1.2.19\lib\net45\GeoJSON.Net.dll</HintPath>
@@ -159,6 +166,12 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="ogr_csharp, Version=1.0.6881.30514, Culture=neutral, PublicKeyToken=db5a52b08dc5b321, processorArchitecture=MSIL">
+      <HintPath>packages\GDAL.2.3.2\lib\net40\ogr_csharp.dll</HintPath>
+    </Reference>
+    <Reference Include="osr_csharp, Version=1.0.6881.30514, Culture=neutral, PublicKeyToken=db5a52b08dc5b321, processorArchitecture=MSIL">
+      <HintPath>packages\GDAL.2.3.2\lib\net40\osr_csharp.dll</HintPath>
+    </Reference>
     <Reference Include="SvgNet">
       <HintPath>..\..\..\..\..\Program Files (x86)\Mission Planner\SvgNet.dll</HintPath>
     </Reference>
@@ -184,6 +197,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="GdalConfiguration.vb" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
