@@ -28,14 +28,22 @@ You can click on any area or marker on the map to get details of what the object
 
 This plugin doesn't yet display all objects. Pull requests are welcome. In the mean time you can still display all point objects, lines and polygons in an ENC but the unhandled items will appear in red. To do this, instead of using ENCs_for_Mission_Planner_handled_layers.dll, you use ENCs_for_Mission_Planner_all_layers.dll
 Charts will then look like so:
+
 ![Alt text](/images/Mission_Planner_all_layers.png "")
 
 The spanner symbols indicate unhandled objects. You can find out what they are by using the middle mouse button.
 
+
 ![Alt text](/images/Mission_Planner_query.png "")
 
 
+**Editing the code**
 
+Open ENCs_for_Mission_Planner.csproj in Visual Studio 2022. When adding dependencies (eg GDAL and GeoJSON.NET), make sure they match those used in Mission Planner, which you can find here: https://github.com/ArduPilot/MissionPlanner/blob/master/MissionPlannerCore.csproj
+
+
+
+The geojson files all have the names of the layer in them
 
 
 

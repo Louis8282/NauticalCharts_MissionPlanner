@@ -919,7 +919,7 @@ public class IconDetails
                             {
                                 string name_of_layer = Path.GetFileNameWithoutExtension(filePath).Split('_').Last().ToUpper(); // Extracts the last part after '_', removes the file extension and converts it to uppercase
                                 Console.WriteLine($"Starting to process {name_of_layer} features.");
-                                Process_unhandled_Features(featureCollection, UNHANDLEDoverlay, name_of_layer);
+                              //  Process_unhandled_Features(featureCollection, UNHANDLEDoverlay, name_of_layer);
                                 Console.WriteLine($"Finished processing {name_of_layer} features.");
                             }
                             catch (Exception ex)
@@ -3346,14 +3346,14 @@ public class IconDetails
             // Get the number of meters per pixel at the current zoom level
             double metersperPixel = Host.FDGMapControl.MapProvider.Projection.GetGroundResolution((int)zoom, center.Lat);
 
-         //   mo = new myOverlay("polygonOverlay");
-        //    mo.AddPolygon(zoom, metersperPixel, center.Lat);
-       //     Host.FDGMapControl.Overlays.Add(mo);            
-           
+            //   mo = new myOverlay("polygonOverlay");
+            //    mo.AddPolygon(zoom, metersperPixel, center.Lat);
+            //     Host.FDGMapControl.Overlays.Add(mo);            
+            Console.WriteLine("opened ENC_for_Mission_Planner plugin");
 
 
-            // Debugging: Check how many overlays and polygons are present
-            Console.WriteLine("Overlays count: " + Host.FDGMapControl.Overlays.Count);
+             // Debugging: Check how many overlays and polygons are present
+             Console.WriteLine("Overlays count: " + Host.FDGMapControl.Overlays.Count);
     //        Console.WriteLine("Polygons in myOverlay: " + mo.Polygons.Count);
 
 
