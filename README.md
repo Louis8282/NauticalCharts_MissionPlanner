@@ -44,6 +44,7 @@ Open ENCs_for_Mission_Planner.csproj in Visual Studio 2022. When adding dependen
 
 
 The geojson files all have the names of the layer in them. For example, 9H7EL612_BOYLAT.js has all of the lateral buoys (BOYLAT) of the 9H7EL612 ENC cell. This section:
+```csharp
   else if (filePath.Contains("BOYLAT"))
  {
      try
@@ -52,6 +53,7 @@ The geojson files all have the names of the layer in them. For example, 9H7EL612
         ProcessBOYLATFeatures(featureCollection, BOYLAToverlay, "BOYLAT");
          Console.WriteLine("Finished processing buoy features.");
      }
+```csharp
 
 Deals with matching each buoy with the correct feature according to its attributes. In order to add another layer type, you would create a new function called Process*new_feature*Features. The details of how to display everything is in the S-52 standard (https://iho.int/en/enc-portrayal) which is rather extensive. The files 'icons' and 'iconsV2' contain the symbols to be used (they are from the OpenCPN project). You can use OpenCPN to check that the plugin is displaying things correctly (https://opencpn.org/).
 
