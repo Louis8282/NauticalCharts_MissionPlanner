@@ -4,7 +4,7 @@ This plugin allows you to overlay nautical charts onto Mission Planner.
 
 ![Alt text](/images/Mission_Planner_sat.png "S-57 Nautical charts overlayed on satellite imagery")
 
-#**Usage**
+**Usage**
 
 Place ENCs_for_Mission_Planner_handled_layers.dll in the plugin folder of Mission Planner located in C:\Program Files (x86)\Mission Planner\plugins. Place the folders icons, iconsV2 and ENCs in the plugin folder.
 
@@ -17,12 +17,27 @@ https://www.elwis.de/DE/dynamisch/IENC/ (Germany)
 
 https://diffusion.shom.fr/cartes-marines-s57.html (France)
 
-Open Mission Planner, right click on the map and chose 'Read S57 layers', navigate to the plugins\ENC folder. Mission Planner will then convert the S57 files to geojson files that the plugin uses. Wait until it finishes (you can enable the console to see the progress but it shouldnt take too long). Restart Mission Planner and your nautical charts should be there! You can get rid of any base map by chosing 'custom' in the 'change current map type' menu in the plan tab.
+Open Mission Planner, right click on the map and chose 'Read S57 layers', navigate to the plugins\ENC folder. Mission Planner will then convert the S57 files to geojson files that the plugin uses. Wait until it finishes (you can enable the console to see the progress but it shouldn't take too long). Restart Mission Planner and your nautical charts should be there! You can get rid of any base map by chosing 'custom' in the 'change current map type' menu in the plan tab.
 
 You can click on any area or marker on the map to get details of what the object is. This is in S-57 language (see https://desktop.arcgis.com/en/arcmap/latest/extensions/maritime-charting/s-57-object-finder.htm)
 
 
 ![Alt text](/images/Object_query.png "S-57 Nautical charts overlayed on satellite imagery")
+
+**Unhandled layers**
+
+This plugin doesn't yet display all objects. Pull requests are welcome. In the mean time you can still display all point objects, lines and polygons in an ENC but the unhandled items will appear in red. To do this, instead of using ENCs_for_Mission_Planner_handled_layers.dll, you use ENCs_for_Mission_Planner_all_layers.dll
+Charts will then look like so:
+![Alt text](/images/Mission_Planner_all_layers.png "")
+
+The spanner symbols indicate unhandled objects. You can find out what they are by using the middle mouse button.
+
+![Alt text](/images/Mission_Planner_query.png "")
+
+
+
+
+
 
 
 
