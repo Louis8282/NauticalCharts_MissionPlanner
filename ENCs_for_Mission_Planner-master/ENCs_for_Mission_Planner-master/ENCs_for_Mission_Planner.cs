@@ -678,12 +678,24 @@ public class IconDetails
             this.BOYSAWoverlay = new GMapOverlay("BOYSAWoverlay");
             this.SOUNDGoverlay = new GMapOverlay("SOUNDGoverlay");
             this.UNHANDLEDoverlay = new GMapOverlay("BOYSAWoverlay");
-
-
-
             this.Generic_markers_overlay = new GMapOverlay("Generic_markers_overlay");
 
-        }  // this is a constructor function (or method as OOP fags call it) When you call it, it creates a bunch of overlays
+            this.LndareOverlay_Planner = new GMapOverlay("lndareOverlay_Planner");
+            this.DepareOverlay_Planner = new GMapOverlay("depareOverlay_Planner");
+            this.DRGAREOverlay_Planner = new GMapOverlay("DRGAREOverlay_Planner");
+           // this.depthSettings_Planner = new DepthSettings(); // Initialize with default depth settings
+            this.BOYLAToverlay_Planner = new GMapOverlay("BOYLAToverlay_Planner"); // Initialize the buoys overlay
+            this.BOYSPPoverlay_Planner = new GMapOverlay("BOYSPPoverlay_Planner");
+            this.NOTMRKoverlay_Planner = new GMapOverlay("NOTMRKoverlay_Planner");
+            this.LIGHTSoverlay_Planner = new GMapOverlay("LIGHTSoverlay_Planner");
+            this.BOYSAWoverlay_Planner = new GMapOverlay("BOYSAWoverlay_Planner");
+            this.SOUNDGoverlay_Planner = new GMapOverlay("SOUNDGoverlay_Planner");
+            this.UNHANDLEDoverlay_Planner = new GMapOverlay("BOYSAWoverlay_Planner");
+            this.Generic_markers_overlay_Planner = new GMapOverlay("Generic_markers_overlay_Planner");
+
+
+
+        }  // this is a constructor function (or method ) When you call it, it creates a bunch of overlays
         public void LoadAndParseGeoJson() // this function opens the folder were ENCs are, figures out which layer they should be in and sends them to be processed in (eg) ProcessLndareFeatures for land area features
         {
             Console.WriteLine("LoadAndParseGeoJson is being run ---------------------------------------------------------------------------------");
@@ -704,7 +716,7 @@ public class IconDetails
                         {
                             try
                             {
-                                ProcessLndareFeatures(featureCollection, LndareOverlay, Color.Tan);
+                                ProcessLndareFeatures(featureCollection, LndareOverlay, LndareOverlay_Planner, Color.Tan);
                             }
                             catch (Exception ex)
                             {
@@ -940,7 +952,7 @@ public class IconDetails
                 Console.WriteLine("Error in LoadAndParseGeoJson: " + ex.Message);
             }
         }
-        private void ProcessLndareFeatures(FeatureCollection featureCollection, GMapOverlay overlay, Color color)
+        private void ProcessLndareFeatures(FeatureCollection featureCollection, GMapOverlay overlay, GMapOverlay overlay_Planner, Color color)
         {
             string Name_of_featureCollection = "LNDARE (land  area)";
             int polygonCount = 0;
@@ -963,7 +975,10 @@ public class IconDetails
                         properties_dictionary[kvp.Key] = kvp.Value;
                     }
                     mapPolygon.Tag = properties_dictionary;
+
                     overlay.Polygons.Add(mapPolygon);
+                    overlay_Planner.Polygons.Add(mapPolygon);
+
                     polygonCount++;
                 }
             }
@@ -3292,6 +3307,24 @@ public class IconDetails
 
         public GMapOverlay UNHANDLEDoverlay { get; private set; }
 
+
+        //now the same for the planner map
+
+
+        public GMapOverlay LndareOverlay_Planner { get; private set; }
+        public GMapOverlay DepareOverlay_Planner { get; private set; }
+        public GMapOverlay DRGAREOverlay_Planner { get; private set; }
+        public GMapOverlay NOTMRKoverlay_Planner { get; private set; } // New overlay for notice marks 
+        public GMapOverlay BOYLAToverlay_Planner { get; private set; } // New overlay for laterall buoys
+        public GMapOverlay BOYSAWoverlay_Planner { get; private set; } // New overlay for safe water buoys
+        public GMapOverlay BOYSPPoverlay_Planner { get; private set; } // New overlay for safe water buoys
+        public GMapOverlay SOUNDGoverlay_Planner { get; private set; } // New overlay for soundings
+        public GMapOverlay LIGHTSoverlay_Planner { get; private set; } // New overlay for lights
+        public GMapOverlay Generic_markers_overlay_Planner { get; private set; }
+
+
+        public GMapOverlay UNHANDLEDoverlay_Planner { get; private set; }
+
         private DepthSettings depthSettings;
 
 
@@ -3303,14 +3336,21 @@ public class IconDetails
 
         // internal static List<IconDetails> BOYLATiconLIST; // Now accessible throughout the class
         internal PointLatLng MouseDownStart;
+       
+        internal static myOverlay telemetry_overlay;
         internal static myOverlay mo;
         internal static myOverlay sectr_overlay;
         internal static myOverlay sectr_overlay2;
         internal static myOverlay sectr_overlay3;
 
+        internal static myOverlay sectr_overlay_Planner;
+        internal static myOverlay sectr_overlay2_Planner;
+        internal static myOverlay sectr_overlay3_Planner;
+
         internal int mouseX;
         internal int mouseY;
         private GeoJsonHandler my_beautiful_overlays; // Class level variable
+
         private List<GMapOverlay> overlaysToSearch;
         private List<GMapOverlay> PolygonoverlaysToSearch;
         public override string Name
@@ -3325,9 +3365,13 @@ public class IconDetails
         {
             get { return "Louis."; }
         }
-      
+
+       
         public override bool Init()
         {
+            telemetry_overlay = new myOverlay("telemetry");
+            Host.FDGMapControl.Overlays.Add(telemetry_overlay);
+
             // Add a new menu item to the Mission Planner map context menu
             ToolStripMenuItem readS57Item = new ToolStripMenuItem("Read S57 Layers");
             readS57Item.Click += ReadS57ItemClick;
@@ -3356,7 +3400,6 @@ public class IconDetails
              Console.WriteLine("Overlays count: " + Host.FDGMapControl.Overlays.Count);
     //        Console.WriteLine("Polygons in myOverlay: " + mo.Polygons.Count);
 
-
             my_beautiful_overlays = new GeoJsonHandler(); //this creates the overlays that we will put stuff in before placing them on the map
 
             Console.WriteLine("about to call LoadAndParseGeoJson");
@@ -3382,9 +3425,11 @@ public class IconDetails
             my_beautiful_overlays.LndareOverlay,
             my_beautiful_overlays.DepareOverlay,
             my_beautiful_overlays.DRGAREOverlay,
-            my_beautiful_overlays.UNHANDLEDoverlay
+            my_beautiful_overlays.UNHANDLEDoverlay,
 
-        };
+              my_beautiful_overlays.LndareOverlay_Planner
+
+        };//started here FPGMapControl
 
             Host.FDGMapControl.Overlays.Add(my_beautiful_overlays.LndareOverlay);
             Host.FDGMapControl.Overlays.Add(my_beautiful_overlays.DepareOverlay);
@@ -3398,6 +3443,17 @@ public class IconDetails
             Host.FDGMapControl.Overlays.Add(my_beautiful_overlays.UNHANDLEDoverlay);
 
 
+            Host.FPGMapControl.Overlays.Add(my_beautiful_overlays.LndareOverlay_Planner);
+            //Host.FPGMapControl.Overlays.Add(my_beautiful_overlays.DepareOverlay);
+            //Host.FPGMapControl.Overlays.Add(my_beautiful_overlays.DRGAREOverlay);
+            //Host.FPGMapControl.Overlays.Add(my_beautiful_overlays.NOTMRKoverlay);
+            //Host.FPGMapControl.Overlays.Add(my_beautiful_overlays.Generic_markers_overlay);
+            //Host.FPGMapControl.Overlays.Add(my_beautiful_overlays.BOYLAToverlay);
+            //Host.FPGMapControl.Overlays.Add(my_beautiful_overlays.BOYSAWoverlay);
+            //Host.FPGMapControl.Overlays.Add(my_beautiful_overlays.BOYSPPoverlay);
+            //Host.FPGMapControl.Overlays.Add(my_beautiful_overlays.SOUNDGoverlay);
+            //Host.FPGMapControl.Overlays.Add(my_beautiful_overlays.UNHANDLEDoverlay);
+
             //     Host.FPGMapControl.Overlays.Add(geoJsonHandler.MapOverlay); //  REMEMBER TO ADD IT TO THIS, WHICH IS THE PLANNING MAP
             // Setup event handler to adjust overlay properties based on zoom level
 
@@ -3405,7 +3461,10 @@ public class IconDetails
 
             Host.FDGMapControl.OnMapZoomChanged += MapZoomChanged;
             Host.FDGMapControl.MouseClick += MYgMapControl1_MouseDown;
- //           Console.WriteLine("Inside Init function! Current Zoom: " + Host.FDGMapControl.Zoom);
+
+            //Host.FPGMapControl.OnMapZoomChanged += MapZoomChangedPlanner;
+            //Host.FPGMapControl.MouseClick += MYgMapControl1_MouseDownPlanner;
+            //           Console.WriteLine("Inside Init function! Current Zoom: " + Host.FDGMapControl.Zoom);
             Console.WriteLine("Overlay Count: " + Host.FDGMapControl.Overlays.Count);
   
 
@@ -3416,14 +3475,17 @@ public class IconDetails
             sectr_overlay = new myOverlay("sectr_overlay");
             sectr_overlay.AddSECTR_lines(13, init_metersperPixel, center.Lat, "lights_sectr_alone");
             Host.FDGMapControl.Overlays.Add(sectr_overlay);
+            //Host.FPGMapControl.Overlays.Add(sectr_overlay);
 
             sectr_overlay2 = new myOverlay("sectr_overlay2");
             sectr_overlay2.AddSECTR_lines(13, init_metersperPixel, center.Lat, "lights_sectr_large");
             Host.FDGMapControl.Overlays.Add(sectr_overlay2);
+            //Host.FPGMapControl.Overlays.Add(sectr_overlay2);
 
             sectr_overlay3 = new myOverlay("sectr_overlay3");
             sectr_overlay3.AddSECTR_lines(13, init_metersperPixel, center.Lat, "lights_sectr_small");
             Host.FDGMapControl.Overlays.Add(sectr_overlay3);
+            //Host.FPGMapControl.Overlays.Add(sectr_overlay3);
             //    sectr_overlay.AddSECTR_lines(13, init_metersperPixel, center.Lat);//, "LIGHTS_SECTR_ALONE");
             //sectr_overlay2.AddSECTR_lines(13, init_metersperPixel, center.Lat, "LIGHTS_SECTR_LARGE");
             //sectr_overlay3.AddSECTR_lines(13, init_metersperPixel, center.Lat, "LIGHTS_SECTR_SMALL");
@@ -3438,7 +3500,10 @@ public class IconDetails
             // gmap_OnMarkerClick();
             //     Host.FDGMapControl.MouseClick += FDGMapControl_MouseClick;
             //  Host.FPGMapControl.OnMapZoomChanged += MapZoomChanged;
-            Host.FDGMapControl.Overlays.Add(my_beautiful_overlays.LIGHTSoverlay);
+           // Host.FDGMapControl.Overlays.Add(my_beautiful_overlays.LIGHTSoverlay);
+            Console.WriteLine("about to add lights to the planner map");
+            Host.FPGMapControl.Overlays.Add(my_beautiful_overlays.LIGHTSoverlay);
+
             return true;
         }
 
@@ -3709,6 +3774,70 @@ private bool GenerateGeoJSONFeatureCollection(string featureType, string fileNam
             }
         }
 
+
+        private void MYgMapControl1_MouseDownPlanner(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Middle)
+            {
+                var clickLocation = Host.FDGMapControl.FromLocalToLatLng(e.X, e.Y);
+
+                // Pass the list of overlays to GetMarkersNearClick
+                var nearbyMarkers = GetMarkersNearClick(clickLocation, 10, Host.FPGMapControl, overlaysToSearch);
+
+                foreach (var marker in nearbyMarkers)
+                {
+                    var tagDictionary = marker.Tag as Dictionary<string, object>;
+
+                    if (tagDictionary != null)
+                    {
+                        // Log or display marker properties
+                        string messageText = "Marker properties:\n";
+                        foreach (var kvp in tagDictionary)
+                        {
+                            messageText += $"{kvp.Key}: {kvp.Value}\n";
+                        }
+
+                        // Display the message box with the marker's information
+                        MessageBox.Show(messageText, "Marker Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+
+
+
+                // Check if the click is within any polygon
+                foreach (var overlay in PolygonoverlaysToSearch)
+                {
+                    foreach (var poly in overlay.Polygons)
+                    {
+                        if (IsPointInPolygon(clickLocation, poly.Points))
+                        {   // Handle the polygon click
+                            var propertiesDictionary = poly.Tag as Dictionary<string, object>;
+                            if (propertiesDictionary != null)
+                            {
+                                // Prepare the message displaying polygon properties
+                                string messageText = "Polygon properties:\n";
+                                foreach (var kvp in propertiesDictionary)
+                                {
+                                    messageText += $"{kvp.Key}: {kvp.Value}\n";
+                                }
+
+                                // Display the message box with the polygon's information
+                                MessageBox.Show(messageText, "Polygon Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            else
+                            {
+                                // Handle the case where no additional data is attached to the polygon
+                                MessageBox.Show("Polygon clicked but no additional data available.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            //break; // Exit the loop after handling the first found polygon
+                        }
+                    }
+                }
+                DisplayLightSectrPropertiesNearClick(clickLocation, 10, Host.FPGMapControl);
+
+            }
+        }
+
         private bool IsPointInPolygon(PointLatLng point, List<PointLatLng> polygon)
         {
             bool result = false;
@@ -3833,7 +3962,119 @@ private bool GenerateGeoJSONFeatureCollection(string featureType, string fileNam
             //}
             foreach (var marker in my_beautiful_overlays.SOUNDGoverlay.Markers)
             {
-                marker.IsVisible = zoom > 14; // Only visible at higher zoom levels
+               // marker.IsVisible = zoom > 14; // Only visible at higher zoom levels
+            }
+        }
+
+
+        private void MapZoomChangedPlanner()
+        {
+            var zoom = Host.FDGMapControl.Zoom;
+            //       Host.FDGMapControl.Overlays.Remove(mo);
+            Host.FPGMapControl.Overlays.Remove(sectr_overlay);
+            Host.FPGMapControl.Overlays.Remove(sectr_overlay2);
+            Host.FPGMapControl.Overlays.Remove(sectr_overlay3);
+
+            PointLatLng center = Host.FPGMapControl.Position;
+            double metersperPixel = Host.FPGMapControl.MapProvider.Projection.GetGroundResolution((int)zoom, center.Lat);
+            //    Console.WriteLine("metersperPixel");
+            //   Console.WriteLine(metersperPixel);
+            //      mo = new myOverlay("polygonOverlay");
+            //     mo.AddPolygon(zoom, metersperPixel, center.Lat);
+            //    Host.FDGMapControl.Overlays.Add(mo);
+
+            if (zoom > 10)
+            {
+                sectr_overlay = new myOverlay("sectr_overlay");
+                sectr_overlay.AddSECTR_lines(zoom, metersperPixel, center.Lat, "lights_sectr_alone");
+                Host.FPGMapControl.Overlays.Add(sectr_overlay);
+
+                sectr_overlay2 = new myOverlay("sectr_overlay2");
+                sectr_overlay2.AddSECTR_lines(zoom, metersperPixel, center.Lat, "lights_sectr_large");
+                Host.FPGMapControl.Overlays.Add(sectr_overlay2);
+
+                sectr_overlay3 = new myOverlay("sectr_overlay3");
+                sectr_overlay3.AddSECTR_lines(zoom, metersperPixel, center.Lat, "lights_sectr_small");
+                Host.FPGMapControl.Overlays.Add(sectr_overlay3);
+                // Adjust properties for sector lights polygons
+
+            }
+
+
+
+            // Adjust properties for LndareOverlay polygons
+            foreach (var polygon in my_beautiful_overlays.LndareOverlay.Polygons)
+            {
+                polygon.IsVisible = zoom > 2;
+                polygon.Stroke.Width = zoom > 10 ? 2 : 1; // Thicker line at higher zoom levels, thinner otherwise
+            }
+
+            // Adjust properties for DepareOverlay polygons
+            foreach (var polygon in my_beautiful_overlays.DepareOverlay.Polygons)
+            {
+                polygon.IsVisible = zoom > 5;
+                polygon.Stroke.Width = zoom > 10 ? 2 : 1; // Thicker line at higher zoom levels, thinner otherwise
+            }
+            // Adjust properties for DRGAREOverlay polygons
+            foreach (var polygon in my_beautiful_overlays.DRGAREOverlay.Polygons)
+            {
+                polygon.IsVisible = zoom > 5;
+                polygon.Stroke.Width = zoom > 10 ? 2 : 1; // Thicker line at higher zoom levels, thinner otherwise
+            }
+
+            // Adjust visibility for BOYLAToverlay markers
+            foreach (var marker in my_beautiful_overlays.BOYLAToverlay.Markers)
+            {
+                marker.IsVisible = zoom > 10; // Only visible at higher zoom levels
+            }
+            // Adjust visibility for LIGHTSoverlay markers
+            foreach (var marker in my_beautiful_overlays.LIGHTSoverlay.Markers)
+            {
+                marker.IsVisible = zoom > 10; // Only visible at higher zoom levels
+            }
+            // Adjust visibility for BOYLAToverlay markers
+            foreach (var marker in my_beautiful_overlays.Generic_markers_overlay.Markers)
+            {
+                marker.IsVisible = zoom > 10; // Only visible at higher zoom levels
+            }
+
+
+            // Adjust visibility for NOTMRKoverlay markers
+            foreach (var marker in my_beautiful_overlays.NOTMRKoverlay.Markers)
+            {
+                marker.IsVisible = zoom > 10; // Only visible at higher zoom levels
+            }
+            // Adjust visibility for BOYSPP markers
+            foreach (var marker in my_beautiful_overlays.BOYSPPoverlay.Markers)
+            {
+                marker.IsVisible = zoom > 10; // Only visible at higher zoom levels
+            }
+
+            // Adjust visibility for safe water buoy markers
+            foreach (var marker in my_beautiful_overlays.BOYSAWoverlay.Markers)
+            {
+                marker.IsVisible = zoom > 10; // Only visible at higher zoom levels
+            }
+            foreach (var marker in my_beautiful_overlays.LIGHTSoverlay.Markers)
+            {
+                marker.IsVisible = zoom > 10; // 10 Only visible at higher zoom levels
+            }
+            foreach (var marker in my_beautiful_overlays.UNHANDLEDoverlay.Markers)
+            {
+                marker.IsVisible = zoom > 10; // Only visible at higher zoom levels
+            }
+
+            //foreach (var route in my_beautiful_overlays.LIGHTSoverlay.Markers)
+            //{
+            //    route.IsVisible = zoom > 7; // 10 Only visible at higher zoom levels
+            //}
+            //foreach (var polygon in my_beautiful_overlays.LIGHTSoverlay.Markers)
+            //{
+            //    polygon.IsVisible = zoom > 7; // 10 Only visible at higher zoom levels
+            //}
+            foreach (var marker in my_beautiful_overlays.SOUNDGoverlay.Markers)
+            {
+              //  marker.IsVisible = zoom > 14; // Only visible at higher zoom levels
             }
         }
 
@@ -3846,13 +4087,55 @@ private bool GenerateGeoJSONFeatureCollection(string featureType, string fileNam
         public override bool Loop()
         //Loop is called in regular intervalls (set by loopratehz)
         {
-            int n = 1;
-            if (n == 3){
-                
-            }
-            n += 1;
-           
-    //        Console.WriteLine("Looping the loop");
+            //int n = 1;
+            //if (n == 3){
+
+            //}
+            //n += 1;
+
+            //        Console.WriteLine("Looping the loop");
+            // Accessing current latitude, longitude, and heading from Host.cs
+            // Accessing current telemetry data from Host.cs
+                    // Accessing current telemetry data from Host.cs
+            double latitude = Host.cs.lat;
+            double longitude = Host.cs.lng;
+            double heading = Host.cs.yaw;
+            double speed = Host.cs.groundspeed; // Speed in m/s
+            double courseOverGround = Host.cs.groundcourse;
+
+            // Calculate predicted position after 1 minute (60 seconds)
+            double speedInMetersPerMinute = speed * 60; // Convert speed to meters per minute
+            double distance = speedInMetersPerMinute / 1000.0; // Convert to kilometers
+
+            // Calculate new position using basic trigonometry
+            // Note: This calculation assumes a flat Earth model for simplicity. For more accurate calculations, consider using geographic libraries.
+            double deltaLat = distance * Math.Cos(courseOverGround * Math.PI / 180) / 111.32; // 111.32 km per degree latitude
+            double deltaLng = distance * Math.Sin(courseOverGround * Math.PI / 180) / (111.32 * Math.Cos(latitude * Math.PI / 180));
+
+            double predictedLat = latitude + deltaLat;
+            double predictedLng = longitude + deltaLng;
+
+            // Clear previous markers and routes
+            telemetry_overlay.Markers.Clear();
+            telemetry_overlay.Routes.Clear();
+
+            // Create a route (line) from current position to predicted position
+            List<PointLatLng> points = new List<PointLatLng>
+    {
+        new PointLatLng(latitude, longitude),
+        new PointLatLng(predictedLat, predictedLng)
+    };
+            GMapRoute route = new GMapRoute(points, "prediction_route");
+            route.Stroke = new Pen(Color.White, 8); // Customize the line color and width
+
+            // Add the route to the overlay
+            telemetry_overlay.Routes.Add(route);
+
+            // Print the values to the console (for debugging purposes)
+            Console.WriteLine($"Latitude: {latitude}, Longitude: {longitude}, Heading: {heading}, Speed: {speed}, Course Over Ground: {courseOverGround}");
+            Console.WriteLine($"Predicted Latitude: {predictedLat}, Predicted Longitude: {predictedLng}");
+
+
 
 
             return true;	//Return value is not used
